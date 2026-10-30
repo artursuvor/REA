@@ -104,7 +104,7 @@ jobs:
           rm .github/workflows/codex-security-audit.yml
           node - <<'NODE'
           const fs=require('fs'), cp=require('child_process');
-          const dirs=[{"dir":".","commands":[["run","metadata:generate"],["run","check"],["run","docs:check"]]}];
+          const dirs=[{"dir":".","commands":[["run","metadata:generate"],["run","docs:generate"],["run","check"],["run","docs:check"]]}];
           let failed=false;
           for(const entry of dirs){
             for(const args of [['ci','--ignore-scripts','--no-audit','--no-fund'],...entry.commands]){
@@ -116,3 +116,12 @@ jobs:
           }
           if(failed)process.exitCode=1;
           NODE
+      - name: Commit regenerated metadata required by the dependency update
+        run: |
+          git add src/generatedPackageMetadata.ts docs/error-contract.schema.json
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git -c core.hooksPath=/dev/null commit -m "fix: regenerate schemas for the patched validation dependency"
+            git push origin HEAD:codex/security-audit-2026-10-30
+          fi
