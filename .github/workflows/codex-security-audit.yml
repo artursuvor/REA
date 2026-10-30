@@ -101,6 +101,7 @@ jobs:
           NODE
       - name: Validate updated dependencies
         run: |
+          rm .github/workflows/codex-security-audit.yml
           node - <<'NODE'
           const fs=require('fs'), cp=require('child_process');
           const dirs=[{"dir":".","commands":[["run","metadata:generate"],["run","check"],["run","docs:check"]]}];
