@@ -125,3 +125,5 @@ jobs:
             git -c core.hooksPath=/dev/null commit -m "fix: regenerate schemas for the patched validation dependency"
             git push origin HEAD:codex/security-audit-2026-10-30
           fi
+      - name: Audit website Python dependencies
+        run: pipx run pip-audit --requirement website/requirements.txt --format json
