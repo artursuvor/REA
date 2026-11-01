@@ -37,6 +37,7 @@ describe("function comparison reconstruction MCP integration", () => {
                 result: left.normalized_result,
                 confidence: left.confidence,
                 authority: left.authority,
+                relationshipCoverage: left.relationship_coverage,
               },
             );
       const server = createServer({ kind: "session", session });
@@ -56,7 +57,14 @@ describe("function comparison reconstruction MCP integration", () => {
         expect(compared.isError).not.toBe(true);
         const comparison = parseEvidence(compared.structuredContent);
         expect(comparison.normalized_result).toMatchObject({
-          status: comparisonStatus,
+          // Equal pseudocode cannot establish equality of omitted function extents.
+          status: comparisonStatus === "unchanged" ? "unknown" : "changed",
+          dimensions: expect.arrayContaining([
+            expect.objectContaining({
+              dimension: "pseudocode",
+              status: comparisonStatus,
+            }),
+          ]),
         });
         expect(comparison.parameters).toEqual({
           left_evidence_id: left.evidence_id,

@@ -329,6 +329,13 @@
   "overrides": {
     "vitepress": {
       "vite": "6.4.5"
+    },
+    "@electron/asar": {
+      "glob": "14.0.3",
+      "minimatch": "11.0.3"
+    },
+    "frida": {
+      "minimatch": "11.0.3"
     }
   },
   "devDependencies": {

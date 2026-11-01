@@ -9,7 +9,7 @@ import { z } from "zod";
  * client that compiles advertised patterns — schema compilation happens before
  * arguments are supplied, so the whole tools request fails rather than one call.
  *
- * The accepted set is identical to the Zod validator; only the offset class
+ * Preserve the original accepted set, including omitted seconds; the offset class
  * escapes `-`, as `\x2d`, because an escaped `-` inside a character class is
  * removed by `oxlint --fix` as a useless escape.
  */
