@@ -1,6 +1,7 @@
 name: PR remediation validation
 
 on:
+  pull_request:
   push:
     branches: [codex/security-audit-2026-10-30]
 
