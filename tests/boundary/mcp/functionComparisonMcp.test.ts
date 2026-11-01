@@ -59,8 +59,7 @@ describe("function comparison reconstruction MCP integration", () => {
         expect(compared.isError).not.toBe(true);
         const comparison = parseEvidence(compared.structuredContent);
         expect(comparison.normalized_result).toMatchObject({
-          // Equal pseudocode cannot establish equality of omitted function extents.
-          status: comparisonStatus === "unchanged" ? "unknown" : "changed",
+          status: comparisonStatus,
           dimensions: expect.arrayContaining([
             expect.objectContaining({
               dimension: "pseudocode",
