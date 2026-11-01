@@ -692,3 +692,5 @@ jobs:
         env:
           CI_JOBS: ${{ toJSON(needs) }}
         run: node scripts/ci/required.mjs
+
+# Verify the final complete-coverage comparison fixture.
