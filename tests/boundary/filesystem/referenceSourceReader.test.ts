@@ -176,7 +176,9 @@ describe("readReferenceSource failures and exclusions", () => {
     });
 
     if (!result.ok) throw result.error;
-    expect(checked).toEqual([
+    expect(
+      checked.toSorted(([left], [right]) => left.localeCompare(right)),
+    ).toEqual([
       ["ignored", "directory"],
       ["kept", "file"],
     ]);

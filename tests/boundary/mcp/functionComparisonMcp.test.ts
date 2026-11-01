@@ -37,6 +37,9 @@ describe("function comparison reconstruction MCP integration", () => {
                 result: left.normalized_result,
                 confidence: left.confidence,
                 authority: left.authority,
+                ...(left.relationship_coverage === null
+                  ? {}
+                  : { relationshipCoverage: left.relationship_coverage }),
               },
             );
       const server = createServer({ kind: "session", session });
@@ -57,6 +60,12 @@ describe("function comparison reconstruction MCP integration", () => {
         const comparison = parseEvidence(compared.structuredContent);
         expect(comparison.normalized_result).toMatchObject({
           status: comparisonStatus,
+          dimensions: expect.arrayContaining([
+            expect.objectContaining({
+              dimension: "pseudocode",
+              status: comparisonStatus,
+            }),
+          ]),
         });
         expect(comparison.parameters).toEqual({
           left_evidence_id: left.evidence_id,
